@@ -1,5 +1,5 @@
 
-from django.conf.urls import url
+from django.conf.urls import re_path
 from django.db import connection
 
 from crudbuilder.registry import registry
@@ -8,7 +8,7 @@ from crudbuilder import helpers
 helpers.auto_discover()
 
 urlpatterns = [
-    url(r'^$', crudlist_view, name='crud-index'),
+    re_path(r'^$', crudlist_view, name='crud-index'),
 ]
 
 tables = connection.introspection.table_names()
@@ -44,6 +44,6 @@ if 'django_content_type' in tables:
             url_name = entry[2].format(app, postfix_url)
 
             urls.append(
-                url(address, entry[1], name=url_name),
+                re_path(address, entry[1], name=url_name),
             )
         urlpatterns += urls

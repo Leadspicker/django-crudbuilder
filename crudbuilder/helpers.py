@@ -1,7 +1,7 @@
 
 import re
 import string
-import imp
+import importlib
 
 try:
     # Django versions >= 1.9
@@ -169,12 +169,10 @@ def import_crud(app):
     except (AttributeError, ImportError):
         return None
 
-    try:
-        imp.find_module('crud', app_path)
-    except ImportError:
+    if importlib.machinery.PathFinder().find_spec('crud', app_path):
+        module = import_module("%s.crud" % app)
+    else:
         return None
-
-    module = import_module("%s.crud" % app)
 
     return module
 
