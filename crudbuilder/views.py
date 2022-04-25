@@ -165,6 +165,13 @@ class ViewBuilder(BaseBuilder):
         self.classes[name] = detail_class
         return detail_class
 
+
+    def get_custom_success_url(self):
+        if self.custom_success_url:
+            return self.custom_success_url()
+        return reverse_lazy('{}-{}-list'.format(self.app, self.custom_postfix_url))
+
+
     def generate_update_view(self):
         """Generate class based view for UpdateView"""
 
@@ -178,7 +185,7 @@ class ViewBuilder(BaseBuilder):
             login_required=self.check_login_required,
             inlineformset=self.inlineformset,
             custom_form=self.createupdate_forms or self.custom_modelform,
-            success_url=reverse_lazy('{}-{}-list'.format(self.app, self.custom_postfix_url)),
+            success_url=self.get_custom_success_url(),
             custom_postfix_url=self.custom_postfix_url
         )
 
