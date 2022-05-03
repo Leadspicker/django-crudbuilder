@@ -2,7 +2,6 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.template import Context, Template
 from django.test.utils import override_settings
-from requests import request
 
 from crudbuilder.helpers import reverse
 from crudbuilder.tests.models import TestModel
