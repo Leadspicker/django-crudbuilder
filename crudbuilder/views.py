@@ -142,6 +142,9 @@ class ViewBuilder(BaseBuilder):
             create_args
         )
 
+        if self.custom_get_success_url:
+            create_class.get_success_url = self.custom_get_success_url
+
         self.classes[name] = create_class
         return create_class
 
@@ -191,7 +194,10 @@ class ViewBuilder(BaseBuilder):
             tuple(parent_classes),
             update_args
         )
-        update_class.get_success_url = lambda x: update_args['success_url']+str(x.kwargs["pk"])
+        
+        if self.custom_get_success_url:
+            update_class.get_success_url = self.custom_get_success_url
+
         self.classes[name] = update_class
         return update_class
 
